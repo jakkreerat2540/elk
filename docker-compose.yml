@@ -84,6 +84,22 @@ services:
     depends_on:
       - elasticsearch
 
+    grafana:
+      images: grafana/grafana
+      volumes:
+        - ./grafana/datasources:/usr/share/grafana/provisioning/datasources:ro,Z
+        - ./grafana/dashboards:/usr/share/grafana/provisioning/dashboards:ro,Z
+        - ./grafana/dashboards:/usr/share/grafana/dashboards:ro,Z
+      ports:
+        - "3000:3000"
+      environment:
+        GRAFANA_USERNAME: "admin"
+        GRAFANA_PASSWORD: "Time@2565"
+      networks:
+        - elk
+
+
+
 networks:
   elk:
     driver: bridge
