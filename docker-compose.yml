@@ -86,7 +86,7 @@ services:
 
   grafana:
     images: grafana/grafana
-    volumes:
+    volume:
       - ./grafana/datasources:/usr/share/grafana/provisioning/datasources:ro,Z
       - ./grafana/dashboards:/usr/share/grafana/provisioning/dashboards:ro,Z
       - ./grafana/dashboards:/usr/share/grafana/dashboards:ro,Z
