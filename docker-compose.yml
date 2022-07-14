@@ -31,7 +31,7 @@ services:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
-      - elasticsearch:/usr/share/elasticsearch/data:z
+      - /datas/elasticsearch:/usr/share/elasticsearch/data:z
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -84,25 +84,18 @@ services:
     depends_on:
       - elasticsearch
 
-  grafana:
-    images: grafana/grafana
-    volume:
-      - ./grafana/datasources:/usr/share/grafana/provisioning/datasources:ro,Z
-      - ./grafana/dashboards:/usr/share/grafana/provisioning/dashboards:ro,Z
-      - ./grafana/dashboards:/usr/share/grafana/dashboards:ro,Z
-    ports:
-      - "3000:3000"
-    environment:
-      GRAFANA_USERNAME: "admin"
-      GRAFANA_PASSWORD: "Time@2565"
-    networks:
-      - elk
+ 
 
 
 
 networks:
   elk:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.20.0/24
+          gateway: 192.168.20.1
+      
 
 volumes:
   setup:
